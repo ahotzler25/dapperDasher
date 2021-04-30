@@ -8,6 +8,9 @@ int main()
     // initialize the window
     InitWindow(windowWidth, windowHeight, "Dapper Dasher!");
 
+    // acceleration due to gravity (pixels/frame)/frame
+    const int gravity{1};
+
     // rectangle dimensions
     const int width{50};
     const int height{80};
@@ -27,6 +30,9 @@ int main()
             velocity -= 10;
         }
 
+        // apply gravity
+        velocity += gravity;
+        // update the position
         posY += velocity;
 
         DrawRectangle(windowWidth/2, posY, width, height, BLUE);
