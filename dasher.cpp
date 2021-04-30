@@ -11,9 +11,19 @@ int main()
     // acceleration due to gravity (pixels/frame)/frame
     const int gravity{1};
 
-    // rectangle dimensions
-    const int width{50};
-    const int height{80};
+    Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    // scarfy dimensions
+    const int width{scarfy.width/6};
+    const int height{scarfy.height};
+
+    Rectangle scarfyRec;
+    scarfyRec.width = width;
+    scarfyRec.height = height;
+    scarfyRec.x = 0;
+    scarfyRec.y = 0;
+    Vector2 scarfyPos;
+    scarfyPos.x = 0;
+    scarfyPos.y = 0;
 
     // is the rectanlge in the air?
     bool isInAir{};
