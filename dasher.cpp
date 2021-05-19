@@ -11,11 +11,13 @@ struct AnimData
 
 int main()
 {
-    //window dimensions
-    const int windowWidth{512};
-    const int windowHeight{380};
+    // array with window dimensions
+    int windowDimensions[2];
+    windowDimensions[0] = 512;
+    windowDimensions[1] = 380;
+
     // initialize the window
-    InitWindow(windowWidth, windowHeight, "Dapper Dasher!");
+    InitWindow(windowDimensions[0], windowDimensions[1], "Dapper Dasher!");
 
     // acceleration due to gravity (pixels/s)/s
     const int gravity{1'000};
@@ -26,7 +28,7 @@ int main()
     // AnimData for nebula
     AnimData nebData{ 
         {0.0, 0.0, nebula.width/8, nebula.height/8}, // Rectangle rec
-        {windowWidth, windowHeight - nebula.height/8}, // Vector2 pos
+        {windowDimensions[0], windowDimensions[1] - nebula.height/8}, // Vector2 pos
         0, // int frame
         1.0/12.0, // float updateTime
         0 // float runningTime
@@ -34,7 +36,7 @@ int main()
 
     AnimData neb2Data{
         {0.0, 0.0, nebula.width/8, nebula.height/8},
-        {windowWidth + 300, windowHeight - nebula.height/8},
+        {windowDimensions[0] + 300, windowDimensions[1] - nebula.height/8},
         0,
         1.0/16.0,
         0.0
@@ -50,8 +52,8 @@ int main()
     scarfyData.rec.height = scarfy.height;
     scarfyData.rec.x = 0;
     scarfyData.rec.y = 0;
-    scarfyData.pos.x = windowWidth/2 - scarfyData.rec.width/2;
-    scarfyData.pos.y = windowHeight - scarfyData.rec.height;
+    scarfyData.pos.x = windowDimensions[0]/2 - scarfyData.rec.width/2;
+    scarfyData.pos.y = windowDimensions[1] - scarfyData.rec.height;
     scarfyData.frame = 0;
     scarfyData.updateTime = 1.0/12.0;
     scarfyData.runningTime = 0.0;
@@ -74,7 +76,7 @@ int main()
         ClearBackground(WHITE);
 
         // perform ground check
-        if (scarfyData.pos.y >= windowHeight - scarfyData.rec.height)
+        if (scarfyData.pos.y >= windowDimensions[1] - scarfyData.rec.height)
         {
             // rectangle is on the ground
             velocity = 0;
