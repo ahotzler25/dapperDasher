@@ -9,29 +9,6 @@ struct AnimData
     float runningTime;
 };
 
-bool isOnGround(AnimData data, int windowHeight)
-{
-    return data.pos.y >= windowHeight - data.rec.height;
-}
-
-AnimData updateAnimData(AnimData data, float deltaTime, int maxFrame)
-{
-    // update running time
-    data.runningTime += deltaTime;
-    if (data.runningTime >= data.updateTime)
-    {
-        data.runningTime = 0.0;
-        // update animation frame
-        data.rec.x = data.frame * data.rec.width;
-        data.frame++;
-        if (data.frame > maxFrame)
-        {
-            data.frame = 0;
-        }
-    }
-    return data;
-}
-
 int main()
 {
     // array with window dimensions
@@ -88,9 +65,6 @@ int main()
 
     int velocity{0};
 
-    Texture2D background = LoadTexture("textures/far-buildings.png");
-    float bgX{};
-
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
@@ -101,14 +75,8 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
-        bgX -= 20 * dT;
-
-        // draw the background
-        Vector2 bgPos{bgX, 0.0};
-        DrawTextureEx(background, bgPos, 0.0, 2.0, WHITE);
-
         // perform ground check
-        if (isOnGround(scarfyData, windowDimensions[1]))
+        if (scarfyData.pos.y >= windowDimensions[1] - scarfyData.rec.height)
         {
             // rectangle is on the ground
             velocity = 0;
@@ -140,12 +108,35 @@ int main()
         // update scarfy's animation frame
         if (!isInAir)
         {
-            scarfyData = updateAnimData(scarfyData, dT, 5);
+            // update running time
+            scarfyData.runningTime += dT;
+            if (scarfyData.runningTime >= scarfyData.updateTime)
+            {
+                scarfyData.runningTime = 0.0;
+                // update animation frame
+                scarfyData.rec.x = scarfyData.frame * scarfyData.rec.width;
+                scarfyData.frame++;
+                if (scarfyData.frame > 5)
+                {
+                    scarfyData.frame = 0;
+                }
+            }
         }
 
         for (int i = 0; i < sizeOfNebulae; i++)
         {
-            nebulae[i] = updateAnimData(nebulae[i], dT, 7);
+            // update nebula animation frame
+            nebulae[i].runningTime += dT;
+            if (nebulae[i].runningTime >= nebulae[i].updateTime)
+            {
+                nebulae[i].runningTime = 0.0;
+                nebulae[i].rec.x = nebulae[i].frame * nebulae[i].rec.width;
+                nebulae[i].frame++;
+                if (nebulae[i].frame > 7)
+                { 
+                    nebulae[i].frame = 0;
+                }
+            }
         }
 
         for (int i = 0; i < sizeOfNebulae; i++)
@@ -162,6 +153,5 @@ int main()
     }
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
-    UnloadTexture(background);
     CloseWindow();
 }
