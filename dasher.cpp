@@ -65,6 +65,8 @@ int main()
         nebulae[i].pos.x =  windowDimensions[0] + i * 300;
     }
 
+    float finishLine{ nebulae[sizeOfNebulae - 1].pos.x };
+
     // nebula X velocity (pixels/second)
     int nebVel{-200};
 
@@ -117,7 +119,7 @@ int main()
         {
             mgX = 0.0;
         }
-        // Scroll the midground
+        // Scroll the foreground
         fgX -= 80 * dT;
         if (fgX <= -foreground.width*2)
         {
@@ -168,6 +170,9 @@ int main()
             // update the position of each nebula
             nebulae[i].pos.x += nebVel * dT;
         }
+
+        // update finishLine
+        finishLine += nebVel * dT;
 
         // update scarfy position
         scarfyData.pos.y += velocity * dT;
