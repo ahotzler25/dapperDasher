@@ -101,11 +101,18 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
+        // Scroll background
         bgX -= 20 * dT;
+        if (bgX <= -background.width*2)
+        {
+            bgX = 0.0;
+        }
 
         // draw the background
-        Vector2 bgPos{bgX, 0.0};
-        DrawTextureEx(background, bgPos, 0.0, 2.0, WHITE);
+        Vector2 bg1Pos{bgX, 0.0};
+        DrawTextureEx(background, bg1Pos, 0.0, 2.0, WHITE);
+        Vector2 bg2Pos{bgX + background.width*2, 0.0};
+        DrawTextureEx(background, bg2Pos, 0.0, 2.0, WHITE);
 
         // perform ground check
         if (isOnGround(scarfyData, windowDimensions[1]))
