@@ -9,6 +9,11 @@ struct AnimData
     float runningTime;
 };
 
+bool isOnGround(AnimData data, int windowHeight)
+{
+    return data.pos.y >= windowHeight - data.rec.height;
+}
+
 int main()
 {
     // array with window dimensions
@@ -76,7 +81,7 @@ int main()
         ClearBackground(WHITE);
 
         // perform ground check
-        if (scarfyData.pos.y >= windowDimensions[1] - scarfyData.rec.height)
+        if (isOnGround(scarfyData, windowDimensions[1]))
         {
             // rectangle is on the ground
             velocity = 0;
